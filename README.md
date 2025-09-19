@@ -59,9 +59,16 @@ Code (FastAPI app)
 Example PDF for testing
 n8n Workflow Export (workflow.json) for Google Sheets integration
 Instructions (this readme file)
+A csv template to store output in google sheets before running app.
 
 Notes:
 No high technical background needed: just run the app, open the browser, click upload, and see results.
 If you face any issue, check that Python is installed and internet is available.(for model download.I used facebook's 'bart-large-cnn' its small,fast and reliable).
 You must connect your own Google Sheets account in n8n 
 after importing the workflow, since credentials are not included.
+
+After importing workflow_without_creds.json into n8n:
+- Open the Google Sheets node
+- Replace <<<YOUR_GOOGLE_SHEET_ID>>> with your own Sheet ID
+- Add your own Google credentials
+- Replace <<<ADD_YOUR_OWN_CREDENTIALS_IN_N8N>>> with your OAuth2 credential ID
