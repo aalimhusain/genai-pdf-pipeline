@@ -1,0 +1,111 @@
+{
+  "name": "PDF Summarizer to Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "upload-pdf",
+        "options": {
+          "binaryPropertyName": "file"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -400,
+        -96
+      ],
+      "id": "82b2d726-71b1-4c8f-88a4-ece50fbd673d",
+      "name": "Webhook",
+      "webhookId": "04a5d331-ee9a-4650-b17d-5d8006feec76"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8000/process",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "file",
+              "inputDataFieldName": "file"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        416,
+        -16
+      ],
+      "id": "0bc12062-8c7c-4f44-874e-2021373ef170",
+      "name": "Send to FastAPI"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": "<<<YOUR_GOOGLE_SHEET_ID>>>",
+        "sheetName": "Sheet1",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Request ID": "={{$json[\"request_id\"]}}",
+            "Persons": "={{ $json[\"person\"].join(\",\") }}",
+            "Locations": "={{ $json[\"location\"].join(\",\") }}",
+            "Date": "={{$json[\"date\"].join(\",\")}}",
+            "Organization": "={{ $json[\"organization\"].join(\",\") }}",
+            "Summary": "={{ $json.summary }}"
+          },
+          "matchingColumns": [
+            "Request ID"
+          ]
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        896,
+        -112
+      ],
+      "id": "be9edbdc-b935-4bff-84e5-cc8dd53eb7d7",
+      "name": "Append to Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": "<<<ADD_YOUR_OWN_CREDENTIALS_IN_N8N>>>"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send to FastAPI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send to FastAPI": {
+      "main": [
+        [
+          {
+            "node": "Append to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
