@@ -6,7 +6,7 @@ This project lets you **upload any PDF document** and automatically:
 - Extract **People, Organizations, Locations, Dates**
 - Save results into **Google Sheets** (via n8n workflow)
 
-It is built for the **GenAI Developer Assignment**.
+It is built for the **GenAI Automation Assignment**.
 
 ---
 
@@ -35,7 +35,7 @@ Keep this window open
 If successful, you will see something like:
 Uvicorn running on http://127.0.0.1:8000
 
-3️⃣ Open the Browser (No Coding Needed!)
+3️⃣ Open the Browser 
 
 Go to: http://127.0.0.1:8000/docs
 (This is a ready-made testing page provided by FastAPI.)
@@ -57,15 +57,14 @@ You will instantly see a JSON response as output.
 
 Code (FastAPI app)
 Example PDF for testing
-n8n Workflow Export (workflow.json) for Google Sheets integration
+n8n Workflow Export (workflow_without_creds.json) for Google Sheets integration
 Instructions (this readme file)
 A csv template to store output in google sheets before running app.
 
 Notes:
 No high technical background needed: just run the app, open the browser, click upload, and see results.
-If you face any issue, check that Python is installed and internet is available.(for model download.I used facebook's 'bart-large-cnn' its small,fast and reliable).
-You must connect your own Google Sheets account in n8n 
-after importing the workflow, since credentials are not included.
+If you face any issue, check that Python is installed and internet is available for model download. I used facebook's 'bart-large-cnn' its small,fast and reliable.
+You must connect your own Google Sheets account in n8n after importing the workflow, since credentials are not included.
 
 After importing workflow_without_creds.json into n8n:
 - Open the Google Sheets node
